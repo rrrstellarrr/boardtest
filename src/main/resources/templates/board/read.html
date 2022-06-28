@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/header :: head ('끄적끄적')"></head>
+<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/search.css">
+<body>
+<header th:replace="layout/header :: header"></header>
+<div class="body_wrap">
+    <div th:replace="layout/navi :: navi"></div>
+    <div class="main">
+        <div class="main_container">
+            <div class="main-content">
+                <div class="read-form">
+                    <div class="read-content" style="margin-top: 2em;">
+                        <div class="form-group">
+                            <p class="read-content-p">제목: </p>
+                            <input class="signin-form" type="text" id="title" name="title" th:value="${board.title}"
+                                   disabled>
+                        </div>
+                        <div class="form-group">
+                            <p class="read-content-p">작성자: </p>
+                            <input class="signin-form" type="text" id="nickname" name="nickname"
+                                   th:value="${board.user.nickname}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <p class="read-content-p">작성일: </p>
+                            <input class="signin-form" type="text" id="modifiedDate" name="modifiedDate"
+                                   th:value="${#temporals.format(board.modifiedDate, 'yyyy-MM-dd HH:mm:ss')}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <p class="read-content-p">조회수: </p>
+                            <input class="signin-form" type="text" id="views" name="views" th:value="${board.views}"
+                                   disabled>
+                        </div>
+                        <div class="form-group">
+<!--                            <p class="read-content-p">내용: </p>-->
+                            <textarea rows="10" class="read-textarea-form" id="content" th:text="${board.content}"
+                                      disabled></textarea>
+                        </div>
+                        <div class="button-container">
+                            <button class="btn"><a href="/kkeujeok/list">목록</a></button>
+                            <div th:if="${nickname == true}" class="button-container-updel">
+                                <button class="btn btn-warning"><a th:href="@{/kkeujeok/update/{id}(id=${board.boardIdx})}"
+                                                                   id="btn-update" style="color: #fff;">수정</a></button>
+                                <button class="btn btn-danger" id="deleteBtn">삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reply-form">
+                        <h3 class="reply-info">댓글
+                            <span></span>
+                        </h3>
+                        <div class="reply-container">
+                            <div class="">
+                                <form style="padding:0;">
+                                    <div class="panel">
+                                        <div class="panel-body">
+                                            <input id="boardIdx" type="hidden" name="boardIdx"
+                                                   th:value="${board.boardIdx}">
+                                            <textarea class="textarea-form" rows="2" id="replyContent"
+                                                      placeholder="What are you thinking?"
+                                                      style="width: -webkit-fill-available;"></textarea>
+                                            <div class="reply-btn-div">
+                                                <button class="btn reply-btn" id="replyBtn" type="button">등록</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <!-- Comments -->
+                                        <!--===================================================-->
+                                        <div class="reply-block" th:each="comment : ${commentList}">
+                                            <a class="media-left" href="#">
+                                                <img class="img-profile" alt="Profile Picture"
+                                                     src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                                            </a>
+                                            <div class="media-body">
+                                                <div class="mar-btm">
+                                                    <a href="#" class="reply-block-link" th:text="${comment.user.nickname}"></a>
+                                                    <p class="reply-block-text text-sm" th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></p>
+                                                </div>
+                                                <p class="text-sm" th:text="${comment.content}"></p>
+                                                <div class="repl-repl-block">
+                                                    <div class="reply-btn-group">
+                                                        <p class="reply-btn-group text-sm">답글달기</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <!--===================================================-->
+                                        <!-- End Newsfeed Content -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/board.js}"></script>
+</body>
+</html>

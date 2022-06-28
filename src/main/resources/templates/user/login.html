@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/header :: head ('끄적끄적')"></head>
+<body>
+<header th:replace="layout/header :: header"></header>
+<div class="body_wrap">
+    <div class="login_main">
+        <div class="display-table">
+            <div class="display-wrap">
+                <div class="main-content">
+                    <h1>로그인</h1>
+                    <p>즐거운 일상을 모두와 함께 공유해 보는건 어떤가요?
+                        많은 친구들이 당신의 일상을 기다리고 있습니다.</p>
+
+                    <!--        로그인 form            -->
+                    <form action="/login" method="post">
+                        <div class="form-group">
+                            <input class="signin-form" type="text" name="username" placeholder="아이디">
+                        </div>
+                        <div class="form-group">
+                            <input class="signin-form" type="password" name="password" placeholder="비밀번호">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn">로그인</button>
+                        </div>
+                        <div th:if="${param.error}">
+                            <p th:text="${exception}" class="alert alert-danger"></p>
+                        </div>
+                    </form>
+                    <p class="signup-required-line">아직 회원이 아니신가요?</p>
+                    <div class="form-group">
+                        <a class="join-tag" href="/join">회원가입하러 가기!!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/user.js}"></script>
+</body>
+</html>

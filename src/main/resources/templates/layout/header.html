@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title>내맘대로 끄적끄적</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Jua&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <style>
+        .header_wrap, .myinfo-p, .read-content-p {
+            font-family: 'Gamja Flower', cursive;
+        }
+        h1, h2, h3, .navbar, .option_form , .search_field input, .write-wrap {
+            font-family: 'Jua', sans-serif;
+        }
+        th, td, span, .mar-btm, .reply-block-text, .contact-pan {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+    </style>
+</head>
+<body>
+<header th:fragment="header">
+    <div class="header_wrap">
+        <div class="header_container">
+            <div class="header_logo">
+                <a href="/" style="font-size: 22px;">내 맘대로<b style="color:#8bbabb;margin-left:0.3em;">끄적<b style="font-size: 30px;color:#5078ef;">끄적 :)</b></b></a>
+            </div>
+        </div>
+    </div>
+</header>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/header :: head ('끄적끄적')"></head>
+<body>
+<header th:replace="layout/header :: header"></header>
+<div class="body_wrap">
+    <div class="login_main">
+        <div class="display-table">
+            <div class="display-wrap">
+                <div class="main-content">
+                    <h1>회원 가입</h1>
+                    <!--        회원가입 form            -->
+                    <form th:action="@{/join}" method="post" th:object="${userDto}">
+                        <input type="hidden" name="_csrf" value="${_csrf.token}">
+                        <div class="form-group">
+                            <input th:field="*{username}" class="signin-form" type="text" id="username" name="username" placeholder="아이디">
+                            <span class="check" id="username_result" th:text="${valid_username}"></span>
+                        </div>
+                        <div class="form-group">
+                            <input th:field="*{password}" class="signin-form" type="password" name="password" placeholder="비밀번호">
+                            <span class="check" th:text="${valid_password}"></span>
+                        </div>
+                        <div class="form-group">
+                            <input th:field="*{email}" class="signin-form" type="email" id="email" name="email" placeholder="이메일">
+                            <span class="check" id="email_result" th:text="${valid_email}"></span>
+                        </div>
+                        <div class="form-group">
+                            <input th:field="*{nickname}" class="signin-form" type="text" id="nickname" name="nickname" placeholder="닉네임">
+                            <span class="check" id="nickname_result" th:text="${valid_nickname}"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn">회원 가입</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/user.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#delete_account').click(function() {
+            const username = $('#username').val();
+            console.log(username);
+
+            $.ajax({
+                type: 'get',
+                url: '/join/check',
+                data: {'username':username},
+
+                success: function (result) {
+                    if (result == true) {
+                        $('#username').attr('readonly', true);
+                        $('#usernameOverlay').attr('disabled', true);
+                        $('#usernameOverlay').css('display', "none");
+                    } else if (result == false) {
+                        $('#username_result').text('이미 사용중인 아이디입니다.');
+                        $('#username').focus();
+                    }
+                }, error: function (request, status,error) {
+                    alert('ajax 실행 실패');
+                    alert('code:' + request.status + '\n' + 'error :' + error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

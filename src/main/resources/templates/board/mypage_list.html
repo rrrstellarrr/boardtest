@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/header :: head ('끄적끄적')"></head>
+<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/search.css">
+<body>
+<header th:replace="layout/header :: header"></header>
+<div class="body_wrap">
+    <div th:replace="layout/navi :: navi"></div>
+    <div class="main">
+        <div class="main_container">
+            <div class="main-content">
+                <div class="category-wrap">
+                    <div class="sortby-wrap">
+                        <h3 class="sub-title">내 끄적들</h3>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead class="row-header">
+                    <tr>
+                        <th class="board-th">#</th>
+                        <th class="board-th" style="width=15em;">제목</th>
+                        <th class="board-th">작성자</th>
+                        <th class="board-th" style="width=4em;">조회수</th>
+                        <th class="board-th">작성일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${boardList.get == null}">
+                        <td colspan="7" style="text-align:center">조회된 리스트가 없습니다.</td>
+                    </tr>
+                    <tr class="content-row" th:each="board, index : ${boardList}" id="boardList">
+                        <td class="board-td" th:text="${index.count}"></td>
+                        <td class="board-td"><a th:href="@{/kkeujeok/read/{id}(id=${board.boardIdx})}" th:text="${board.title}"></a></td>
+                        <td class="board-td" th:text="${board.user.nickname}"></td>
+                        <td class="board-td" th:text="${board.views}"></td>
+                        <td class="board-td" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="write-wrap">
+                    <a href="/kkeujeok/write">글쓰기</a>
+                </div>
+                <div th:if="${!boardList.isEmpty()}" style="margin: 20px 16px;">
+                    <ul class="pagination pagination-circle">
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/kkeujeok/list(page=1, search=${param.search})}">
+                                <span class="page-link-title">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:class="${boardList.first} ? 'disabled'">
+                            <a class="page-link"
+                               th:href="@{/kkeujeok/list(page=${first} ? '#' : ${boardList.number}, search=${param.search})}"
+                               aria-label="Previous">
+                                <span class="page-link-title">&lt;</span>
+                            </a>
+                        </li>
+                        <li th:each="page : ${#numbers.sequence(startPage, endPage)}"
+                            th:classappend="${page == boardList.number + 1} ? 'active'" class="page-item">
+                            <a class="page-link"
+                               th:href="@{/kkeujeok/list(page=${page}, search=${param.search})}">
+                                <span th:text="${page}" class="page-link-title"></span>
+                            </a>
+                        </li>
+                        <li th:class="${boardList.last} ? 'disabled'">
+                            <a class="page-link" th:href="@{/kkeujeok/list(page=${last} ? '#' : ${boardList.number + 2}, search=${param.search})}"
+                               aria-label="Next">
+                                <span class="page-link-title">&gt;</span>
+                            </a>
+                        </li>
+                        <li th:class="${endPage} ? 'disabled'">
+                            <a class="page-link" th:href="@{/kkeujeok/list(page=${boardList.totalPages})}"
+                               aria-label="Last">
+                                <span class="page-link-title">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/board.js}"></script>
+</body>
+</html>

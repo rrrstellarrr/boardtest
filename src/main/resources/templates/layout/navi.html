@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="nav-top" th:fragment="navi">
+    <div class="title-container">
+        <div class="row justify-content-center">
+            <div class="text-center sub-head">
+                <form method="GET" th:action="@{/kkeujeok/list}" style="padding:1.5em;">
+                    <div class="wrapper">
+                        <div class="search_box">
+                            <div class="dropdown">
+                                <select class="option_form" name="category">
+                                    <option class="option_form option_title" value="all" selected>전체</option>
+                                    <option class="option_form option_title" value="title">제목</option>
+                                </select>
+                            </div>
+                            <div class="search_field">
+                                <input type="text" class="input" id="search" name="search" placeholder="Search">
+                                <button type="submit" id="searchBtn" style="display: contents;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="search-icon" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar">
+        <div class="container">
+            <a></a>
+            <ul class="navbar-ul">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">홈</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/kkeujeok/list" class="nav-link">끄적끄적</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/kkeujeok/album" class="nav-link">사진기록</a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a href="/manimani" class="nav-link">여러마디</a>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a href="/contack" class="nav-link">CONTACK</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"></a>
+                </li>
+                <li class="nav-item dropdown active">
+                    <a href="#" class="nav-link">마이페이지</a>
+                    <div class="dropdown-menu">
+                        <a href="/mypage/myinfo" class="dropdown-item">내 정보</a>
+                        <a href="/mypage/favorite" class="dropdown-item">즐겨찾기</a>
+                        <a href="/mypage/list" class="dropdown-item">내 끄적들</a>
+                        <hr class="dropdown-divider dropdown-item">
+                        <a href="/logout" class="dropdown-item">로그아웃</a>
+                    </div>
+                </li>
+            </ul>
+            <a></a>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/header :: head ('끄적끄적')"></head>
+<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/search.css">
+<body>
+<header th:replace="layout/header :: header"></header>
+<div class="body_wrap">
+    <div th:replace="layout/navi :: navi"></div>
+    <div class="main">
+        <div class="main_container">
+        </div>
+        <!--        <a href="/login">로그인</a>-->
+        <!--        <br>-->
+        <!--        <a href="/go_search">검색하러가기</a>-->
+        <!--        <ul>-->
+        <!--            <li><a href="/admin/goods/register">상품 등록</a></li>-->
+        <!--            <li><a href="/admin/goods/list">상품 목록</a></li>-->
+        <!--            <li><a href="/admin/shop/orderList">주문 목록</a></li>-->
+
+        <!--            <li><a href="/admin/shop/allReply">상품 소감</a></li>-->
+
+        <!--            <li><a href="">유저 목록</a></li>-->
+        <!--        </ul>-->
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/search.js}"></script>
+<script>
+    var default_area = '';
+        function area_select(selected_area) {
+            if( default_area != selected_area ) {
+                if( default_area !='' ) {
+                    default_area.style.display = 'none';
+                }
+                selected_area.style.display = 'block';
+                default_area = selected_area;
+            } else {
+                selected_area.style.display = 'none';
+                default_area = '';
+            }
+        }
+</script>
+</body>
+
+</html>
