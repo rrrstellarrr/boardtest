@@ -1,4 +1,4 @@
-package com.springcore.boardtest.security;
+package com.springcore.boardtest.config.auth;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;

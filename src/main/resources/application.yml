@@ -27,4 +27,12 @@ spring:
       format_sql: true
       ddl-auto: update
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      maxRequestSize: 10MB
+
+profileImg:
+  path: /이미지저장경로/profile_imgs/
 

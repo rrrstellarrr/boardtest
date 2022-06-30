@@ -1,4 +1,4 @@
-package com.springcore.boardtest.security;
+package com.springcore.boardtest.config.auth;
 
 import com.springcore.boardtest.domain.user.User;
 import com.springcore.boardtest.repository.user.UserRepository;

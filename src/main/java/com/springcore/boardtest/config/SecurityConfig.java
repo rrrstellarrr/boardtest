@@ -1,5 +1,6 @@
-package com.springcore.boardtest.security;
+package com.springcore.boardtest.config;
 
+import com.springcore.boardtest.config.auth.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
