@@ -45,11 +45,18 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards = new ArrayList<>();
 
+    private String profileImage;
+
     // 회원정보 수정
     public void update(String password, String email, String nickname) {
         this.password = password;
         this.email = email;
         this.nickname = nickname;
+    }
+
+    // 회원 프로필 사진 수정
+    public void updateProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
 }

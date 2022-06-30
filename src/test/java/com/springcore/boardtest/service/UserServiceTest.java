@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
 @SpringBootTest
 public class UserServiceTest {
@@ -50,9 +51,10 @@ public class UserServiceTest {
         requestDto.setPassword("111111");
         requestDto.setEmail("user2@gmail.com");
         requestDto.setNickname("테스트유저이");
+        MultipartFile multipartFile;
 
         // when
-        userService.update(requestDto, testId);
+        // userService.update(requestDto, testId);
 
         // then
         // Assertions.assertThat(result).isEqualTo(1);

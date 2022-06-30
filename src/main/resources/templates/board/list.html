@@ -48,7 +48,7 @@
                     </tr>
                     <tr class="content-row" th:each="board: ${boardList}" id="boardList">
                         <td class="board-td" th:text="${board.boardIdx}"></td>
-                        <td class="board-td"><a th:href="@{/kkeujeok/read/{id}(id=${board.boardIdx})}" th:text="${board.title}"></a></td>
+                        <td class="board-td"><a th:href="@{/kkeujeok/read/{id}(id=${board.boardIdx})}" th:text="${board.title} + ' (' + ${#lists.size(board.comments)} + ')'"></a></td>
                         <td class="board-td" th:text="${board.user.nickname}"></td>
                         <td class="board-td" th:text="${board.views}"></td>
                         <td class="board-td" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}"></td>
@@ -85,12 +85,12 @@
                                 <span class="page-link-title">&gt;</span>
                             </a>
                         </li>
-                        <li th:class="${endPage} ? 'disabled'">
-                            <a class="page-link" th:href="@{/kkeujeok/list(page=${boardList.totalPages}, , category=${param.category}, search=${param.search})}"
-                               aria-label="Last">
-                                <span class="page-link-title">&raquo;</span>
-                            </a>
-                        </li>
+<!--                        <li th:class="${endPage} ? 'disabled'">-->
+<!--                            <a class="page-link" th:href="@{/kkeujeok/list(page=${boardList.totalPages}, , category=${param.category}, search=${param.search})}"-->
+<!--                               aria-label="Last">-->
+<!--                                <span class="page-link-title">&raquo;</span>-->
+<!--                            </a>-->
+<!--                        </li>-->
                     </ul>
                 </div>
             </div>

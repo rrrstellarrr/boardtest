@@ -29,10 +29,9 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     // 마이페이지 검색
     Page<Board> findByUser(User user, Pageable pageable);
 
-    // 조회수 기준 Top5 조회
-    List<Board> findTop5ByViewsOrderByViewsDesc(int views);
 
-
+    // 게시글 삭제 (회원 탈퇴)
+    void deleteBoardByUser(User user);
 
 //    @Query(value = "SELECT userIdx, count(userIdx) as postingCnt FROM Board group by userIdx ORDER BY postingCnt DESC")
 //            countQuery = "SELECT COUNT(b.userIdx) AS counts FROM Board b ORDER BY counts DESC",

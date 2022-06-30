@@ -167,14 +167,19 @@ li a {
     width: 100%;
     margin-top: 6em;
 }
+
+.reply-form h3 p {
+    display: contents;
+    font-size: 18px;
+    color: gray;
+}
+
 .reply-info{
     text-align: start;
     margin-left: 2em;
     margin-bottom: 0;
     color: gray;
 }
-
-/**/
 
 .img-profile {
     width: 46px;
@@ -186,6 +191,8 @@ li a {
     display: block;
     overflow: hidden;
     width: auto;
+    padding: 18px 0 10px;
+    box-shadow: 0 1px 0 rgb(0 0 0 / 8%);
 }
 
 .panel {
@@ -207,7 +214,7 @@ li a {
 }
 
 .panel-body {
-    padding: 25px 20px;
+    padding: 7px 20px;
 
 }
 
@@ -233,6 +240,12 @@ li a {
     overflow: hidden;
     width: auto
 
+}
+
+.media-body div button {
+    margin-left: 1em;
+    border: 0;
+    background-color: white;
 }
 
 .middle .media-left,
@@ -382,20 +395,19 @@ li a {
     margin-top: 2rem;
 }
 .reply-btn-group {
-    color: #65cbad;
-    font-weight: bold;
+    color: red;
     cursor: pointer;
 }
 
 .upload-form {
     position: relative;
     max-width: 205px;
-    margin: 50px auto;
+    margin: 33px auto;
 }
 
 .upload-edit {
     position: absolute;
-    right: 12px;
+    right: 17px;
     z-index: 1;
     top: 10px;
 }
@@ -404,7 +416,7 @@ li a {
     background: rgb(228 242 241);
 }
 
-#imageUpload {
+.upload-edit input {
     display: none;
 }
 

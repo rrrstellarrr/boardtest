@@ -10,25 +10,23 @@
     <div class="main">
         <div class="main_container">
             <div class="main-content">
-                <h3>내 정보</h3>
                 <!--        내 정보 수정 form            -->
-                <!--                <form th:action="@{'/myinfo-edit/' + ${user.userIdx}} +'/' + ${user.username}" method="post">-->
-                <form class="mypage-form">
+                <form class="mypage-form" action="/myinfo/update" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="_method" value="put">
-                    <input type="hidden" name="_method" value="delete">
                     <input id="userIdx" type="hidden" name="userIdx" th:value="${user.userIdx}">
+                    <h3>내 정보</h3>
                     <!--         프로필 사진           -->
                     <div class="upload-form">
                         <div class="upload-edit">
-                            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg">
-                            <label class="upload-edit-lab" for="imageUpload">
+                            <input type="file" id="profileImage" name="profileImage" accept=".png, .jpg, .jpeg">
+                            <label class="upload-edit-lab" for="profileImage">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill pencil" viewBox="0 0 16 16">
                                     <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
                                 </svg>
                             </label>
                         </div>
                         <div class="upload-preview">
-                            <div id="imagePreview">
+                            <div id="imagePreview" th:style="'background-image:url('+ @{'/profile_imgs/' + ${user.profileImage}} +');'">
                             </div>
                         </div>
                     </div>
@@ -37,24 +35,28 @@
                                                             name="username" th:value="${user.username}" disabled>
                     </div>
                     <div class="myinfo-form-group">
-                        <p class="myinfo-p">비밀번호: </p><input class="signin-form" id="password" type="password"
+                        <p class="myinfo-p">비밀번호: </p>
+                            <input class="signin-form" id="password" type="password"
                                                              name="password" placeholder="비밀번호">
+                        <span class="check" th:text="${valid_password}"></span>
                     </div>
                     <div class="myinfo-form-group">
                         <p class="myinfo-p">이메일: </p><input class="signin-form" id="email" type="email" name="email"
                                                             th:value="${user.email}"
                                                             placeholder="이메일">
+                        <span class="check" id="email_result" th:text="${valid_email}"></span>
                     </div>
                     <div class="myinfo-form-group">
                         <p class="myinfo-p">닉네임: </p><input class="signin-form" id="nickname" type="text"
                                                             name="nickname" th:value="${user.nickname}"
                                                             placeholder="닉네임">
+                        <span class="check" id="nickname_result" th:text="${valid_nickname}"></span>
                     </div>
                     <div class="form-group">
-                        <button class="btn" id="update_account">내정보 수정</button>
+                        <button class="btn" id="update_account" type="submit">내정보 수정</button>
                     </div>
                     <div class="delete-form-group">
-                        <button class="btn-red" id="delete_account">회원 탈퇴</button>
+                        <a class="btn-red" href="/mypage/myinfo/delete">회원 탈퇴</a>
                     </div>
                 </form>
             </div>
@@ -64,26 +66,5 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script th:src="@{/js/user.js}"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $("#delete_account").click(function() {
-        const result = confirm("회원탈퇴를 하시겠습니까?");
-        const user_idx = $("#userIdx").val();
-        console.log(user_idx);
-
-         if(result == true) {
-             $.ajax({
-                 type: "DELETE",
-                 url: "/myinfo/delete/" + user_idx
-             }).done(function(result){
-                alert("회원탈퇴가 완료되었습니다.");
-                location.href = "redict:/";
-             }).fail(function(error){
-                alert(JSON.stringify(error));
-            });
-         }
-    });
-});
-</script>
 </body>
 </html>

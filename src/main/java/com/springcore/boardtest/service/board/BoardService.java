@@ -5,8 +5,9 @@ import com.springcore.boardtest.domain.user.User;
 import com.springcore.boardtest.dto.board.BoardRequestDto;
 import com.springcore.boardtest.dto.board.BoardResponseDto;
 import com.springcore.boardtest.repository.board.BoardRepository;
-import com.springcore.boardtest.security.CustomUserDetails;
-import lombok.AllArgsConstructor;
+import com.springcore.boardtest.config.auth.CustomUserDetails;
+import com.springcore.boardtest.repository.comment.CommentRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,10 +19,11 @@ import javax.transaction.Transactional;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final CommentRepository commentRepository;
 
     public Long save(BoardRequestDto boardRequestDto, CustomUserDetails principalDetail) {
         boardRequestDto.setUser(principalDetail.getUser());
@@ -63,7 +65,9 @@ public class BoardService {
     @Transactional
     public void delete(Long id) {
         Board board = vaidateDuplicationBoardIdx(id);
-        boardRepository.delete(board);
+
+        commentRepository.deleteCommentByBoard(board);
+        boardRepository.deleteById(board.getBoardIdx());
     }
 
     // 조회수 증가 처리
@@ -71,12 +75,6 @@ public class BoardService {
     public void updateViews(Long id) {
         boardRepository.updateByViews(id);
     }
-
-    // 글 목록(조회수 기준 Top5 조회)
-//    @Transactional
-//    public List<Board> findTop5ByViewsOrderByViewsDesc(int views) {
-//        return boardRepository.findTop5ByViewsOrderByViewsDesc(views);
-//    }
 
     // 마이페이스 글 목록
     @Transactional

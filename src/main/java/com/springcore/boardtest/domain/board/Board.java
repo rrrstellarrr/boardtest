@@ -35,11 +35,7 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name = "userIdx")
     private User user;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "categoryIdx")
-//    private Category category;
-
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
     @Column(nullable = false, columnDefinition = "integer(5) default 0")

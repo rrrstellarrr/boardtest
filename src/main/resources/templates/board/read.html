@@ -33,7 +33,6 @@
                                    disabled>
                         </div>
                         <div class="form-group">
-<!--                            <p class="read-content-p">내용: </p>-->
                             <textarea rows="10" class="read-textarea-form" id="content" th:text="${board.content}"
                                       disabled></textarea>
                         </div>
@@ -48,10 +47,10 @@
                     </div>
                     <div class="reply-form">
                         <h3 class="reply-info">댓글
-                            <span></span>
+                            <p th:text="${#lists.size(board.comments)}"></p>
                         </h3>
                         <div class="reply-container">
-                            <div class="">
+                            <div>
                                 <form style="padding:0;">
                                     <div class="panel">
                                         <div class="panel-body">
@@ -70,23 +69,28 @@
                                     <div class="panel-body">
                                         <!-- Comments -->
                                         <!--===================================================-->
+                                        <input type="hidden" name="_method" value="delete">
                                         <div class="reply-block" th:each="comment : ${commentList}">
-                                            <a class="media-left" href="#">
-                                                <img class="img-profile" alt="Profile Picture"
-                                                     src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                                            <input type="hidden" name="commentIdx" id="commentIdx" th:value="${comment.commentIdx}">
+                                            <a class="media-left">   <img class="img-profile"
+                                                     th:src="@{'/profile_imgs/' + ${comment.user.profileImage}}">
                                             </a>
                                             <div class="media-body">
                                                 <div class="mar-btm">
                                                     <a href="#" class="reply-block-link" th:text="${comment.user.nickname}"></a>
                                                     <p class="reply-block-text text-sm" th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></p>
                                                 </div>
-                                                <p class="text-sm" th:text="${comment.content}"></p>
-                                                <div class="repl-repl-block">
-                                                    <div class="reply-btn-group">
-                                                        <p class="reply-btn-group text-sm">답글달기</p>
+                                                <div>
+                                                    <p class="text-sm" th:text="${comment.content}"></p>
+                                                    <div class="reply-btn-group" th:if="${comment.user.nickname == user.nickname}">
+                                                        <button class="reply-btn-group text-sm" id="replyDelBtn">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                        </svg>
+                                                            삭제
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <hr>
                                             </div>
                                         </div>
                                         <!--===================================================-->

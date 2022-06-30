@@ -1,6 +1,7 @@
 package com.springcore.boardtest.service.comment;
 
 import com.springcore.boardtest.domain.board.Board;
+import com.springcore.boardtest.domain.comment.Comment;
 import com.springcore.boardtest.domain.user.User;
 import com.springcore.boardtest.dto.comment.CommentRequestDto;
 import com.springcore.boardtest.repository.board.BoardRepository;
@@ -26,5 +27,11 @@ public class CommentService {
         commentRequestDto.setUser(user);
         commentRepository.save(commentRequestDto.toEntity());
         return commentRequestDto.getBoard().getBoardIdx();
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다. id: " + id));
+        commentRepository.delete(comment);
     }
 }

@@ -3,7 +3,7 @@ package com.springcore.boardtest.controller.board;
 import com.springcore.boardtest.domain.board.Board;
 import com.springcore.boardtest.dto.board.BoardResponseDto;
 import com.springcore.boardtest.dto.comment.CommentResponseDto;
-import com.springcore.boardtest.security.CustomUserDetails;
+import com.springcore.boardtest.config.auth.CustomUserDetails;
 import com.springcore.boardtest.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,30 +59,6 @@ public class BoardController {
         return "/board/list";
     }
 
-    /* paging ver.1 start */
-//    @GetMapping("")
-//    public String list(Model model, @PageableDefault Pageable pageable) {
-//        Page<Board> list = boardService.findAll(pageable);
-//
-//        model.addAttribute("boardList", list);
-//        log.info("총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
-//                list.getTotalElements(), list.getTotalPages(), list.getSize(),
-//                list.getNumber(), list.getNumberOfElements());
-//
-//
-//        return "/board/list";
-//    }
-//        model.addAttribute("totalPage", list.getTotalPages());
-//        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / 10))) - 1) * 10 + 1;
-//        int endPage = ((startPage + 9) < list.getTotalPages()) ? startPage + 9 : list.getTotalPages();
-//
-//        log.info("시작페이지:{}"+ startPage);
-//
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
-
-    /* paging ver.1 end */
-
     @GetMapping("/kkeujeok/list{sortby}")
     public String list(Model model,
                        @PageableDefault(size = 10) Pageable pageable,
@@ -115,7 +91,6 @@ public class BoardController {
 
         if(userDetails.getUser() != null) {
             model.addAttribute("user", userDetails.getUser());
-
             if(boardDto.getUser().getUserIdx().equals(userDetails.getUser().getUserIdx())) {
                 model.addAttribute("nickname", true);
             }

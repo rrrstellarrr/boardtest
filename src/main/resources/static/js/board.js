@@ -63,7 +63,7 @@ $(function(){
     $("#deleteBtn").on("click", function(){
         const id = $("#boardIdx").val();
 
-        if(confirm("회원탈퇴를 하시겠습니까?")) {
+        if(confirm("게시글을 삭제하시겠습니까?")) {
             $.ajax({
                 type: "DELETE",
                 url: "/delete/" + id,
@@ -71,12 +71,30 @@ $(function(){
                 contentType: "application/json; charset=utf-8"
             }).done(function() {
                 alert("삭제되었습니다.");
-                window.location.href="/kkeujeok";
+                window.location.href="/kkeujeok/list";
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });
         }
     });
+
+    $("#replyDelBtn").on("click", function(){
+        const commentId = $("#commentIdx").val();
+
+        if(confirm("댓글을 삭제하시겠습니까?")) {
+            $.ajax({
+                type: "DELETE",
+                url: "/comment/delete/" + commentId,
+                dataType: "JSON",
+                contentType: "application/json; charset=utf-8"
+            }).done(function() {
+                alert("삭제되었습니다.");
+                window.location.reload();
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
+    })
 
     $("#sort-new").on("click", function(){
         if(!$("#sort-new .sortby-item").hasClass("checked")) {
@@ -127,4 +145,6 @@ $(function(){
         $(".default-option").text(text);
         $(".dropdown ul").removeClass("active");
     });
+
+
 });

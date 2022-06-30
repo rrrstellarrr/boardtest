@@ -39,33 +39,5 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script th:src="@{/js/user.js}"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#delete_account').click(function() {
-            const username = $('#username').val();
-            console.log(username);
-
-            $.ajax({
-                type: 'get',
-                url: '/join/check',
-                data: {'username':username},
-
-                success: function (result) {
-                    if (result == true) {
-                        $('#username').attr('readonly', true);
-                        $('#usernameOverlay').attr('disabled', true);
-                        $('#usernameOverlay').css('display', "none");
-                    } else if (result == false) {
-                        $('#username_result').text('이미 사용중인 아이디입니다.');
-                        $('#username').focus();
-                    }
-                }, error: function (request, status,error) {
-                    alert('ajax 실행 실패');
-                    alert('code:' + request.status + '\n' + 'error :' + error);
-                }
-            });
-        });
-    });
-</script>
 </body>
 </html>

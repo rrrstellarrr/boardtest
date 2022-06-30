@@ -3,9 +3,13 @@ package com.springcore.boardtest.service.user;
 import com.springcore.boardtest.domain.user.User;
 import com.springcore.boardtest.domain.user.UserRole;
 import com.springcore.boardtest.dto.user.UserRequestDto_valid;
+import com.springcore.boardtest.dto.user.UserUpdateDto_valid;
+import com.springcore.boardtest.repository.board.BoardRepository;
+import com.springcore.boardtest.repository.comment.CommentRepository;
 import com.springcore.boardtest.repository.user.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,20 +18,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
+    private final CommentRepository commentRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+
+    @Value("${profileImg.path}")
+    private String imageUploadFolder;
 
     // 회원가입
     public Long save(UserRequestDto_valid userRequestDto) {
@@ -48,7 +61,7 @@ public class UserService {
     public boolean duplicateCheckUserName(String username) {
         log.info("Check username: {}", username);
 
-         return userRepository.existsByUsername(username);
+        return userRepository.existsByUsername(username);
     }
 
     // 회원가입 시, 이메일 중복 체크
@@ -76,26 +89,53 @@ public class UserService {
         return validatorResult;
     }
 
+
     // 회원정보 수정
     @Transactional
-    public void update(UserRequestDto_valid userRequestDto, Long idx) {
+    public void update(UserUpdateDto_valid updatetDto, MultipartFile multipartFile, Long idx) {
         User findUser =  userRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지않습니다. idx: " + idx));
 
-        String password = passwordEncoder.encode(userRequestDto.getPassword());
+        String password = passwordEncoder.encode(updatetDto.getPassword());
 
-        findUser.update(password, userRequestDto.getEmail(), userRequestDto.getNickname());
-        log.info("### update param: {}", findUser);
+        if(!multipartFile.isEmpty()) {
+            String imageFileName = findUser.getUserIdx() + "_" + multipartFile.getOriginalFilename();
+            Path imageFilePath = Paths.get(imageUploadFolder + imageFileName);
+            log.info("ImageFile Name :{}" , imageFileName);
+            log.info("ImageFile Path :{}" , imageFilePath);
+            try {
+                if(findUser.getProfileImage() != null) {
+                    File file = new File(imageUploadFolder + findUser.getProfileImage());
+                    file.delete();
+                }
+                Files.write(imageFilePath, multipartFile.getBytes());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            findUser.updateProfileImage(imageFileName);
+        }
 
-         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(findUser.getUsername(), userRequestDto.getPassword()));
-         SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return findUser.getUserIdx();
+        findUser.update(password, updatetDto.getEmail(), updatetDto.getNickname());
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(findUser.getUsername(), updatetDto.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     // 회원탈퇴
     @Transactional
     public void delete(Long id) {
         User findUser =  userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지않습니다. id: " + id));
-        userRepository.delete(findUser);
+
+        commentRepository.deleteCommentByUser(findUser);
+        boardRepository.deleteBoardByUser(findUser);
+
+        File file = new File(imageUploadFolder + findUser.getProfileImage());
+        file.delete();
+        userRepository.deleteById(findUser.getUserIdx());
+        SecurityContextHolder.clearContext();
     }
 
+    public boolean checkPassword(Long id, String check_password) {
+        User findUser =  userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지않습니다. id: " + id));
+        return passwordEncoder.matches(check_password, findUser.getPassword());
+    }
 }
