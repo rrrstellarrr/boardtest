@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/header :: head ('끄적끄적')"></head>
+<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/search.css">
+<body>
+<header th:replace="layout/header :: header"></header>
+<div class="body_wrap">
+    <div th:replace="layout/navi :: navi"></div>
+    <div class="main">
+        <div class="main_container">
+            <div class="main-content">
+                <!--        내 정보 수정 form            -->
+                <h3>회원탈퇴</h3>
+                <p>회원탈퇴를 위해 귀하의 비밀번호를 입력해주세요.</p>
+                <form action="/myinfo/delete" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <input id="userIdx" type="hidden" name="userIdx" th:value="${user.userIdx}">
+                    <input id="password" type="hidden" name="password" th:value="${user.password}">
+                    <div class="myinfo-form-group">
+                        <p class="myinfo-p">비밀번호 확인: </p>
+                            <input class="signin-form" id="chkPassword" name="chkPassword" type="password" placeholder="비밀번호">
+                        <span class="check" th:text="${massage}"></span>
+                    </div>
+                    <div class="delete-form-group">
+                        <button class="btn-red" id="delete_account" type="submit">회원 탈퇴</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/user.js}"></script>
+</body>
+</html>
