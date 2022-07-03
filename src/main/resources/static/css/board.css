@@ -90,12 +90,8 @@ td {
     color: #343a40!important;
     border: 1px solid gray;
     background: rgba(255,255,255,.08);
-    border-radius: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2em;
+    border-radius: 28px;
+    margin: 1em 0;
 }
 
 .read-content {
@@ -109,6 +105,16 @@ td {
     display: contents;
 }
 
+.read-btn {
+    padding-bottom: 3em;
+}
+
+.read-sub-title {
+    padding: 0 35px;
+    margin: 0 0;
+    font-size: 24px;
+}
+
 .category-wrap {
     position: relative;
     margin: 10px 0 0;
@@ -120,7 +126,7 @@ td {
 
 .sub-title {
     float: left;
-    padding: 10px 0;
+    padding: 0 35px;
     margin: 0 0;
     font-size: 24px;
 }
@@ -319,7 +325,7 @@ li a {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    width: 70%;
+    width: 100%;
     padding: 10px 12px;
     font-size: 14px;
     line-height: 1.42857143;

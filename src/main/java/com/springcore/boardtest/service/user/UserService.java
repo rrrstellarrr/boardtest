@@ -2,8 +2,8 @@ package com.springcore.boardtest.service.user;
 
 import com.springcore.boardtest.domain.user.User;
 import com.springcore.boardtest.domain.user.UserRole;
-import com.springcore.boardtest.dto.user.UserRequestDto_valid;
-import com.springcore.boardtest.dto.user.UserUpdateDto_valid;
+import com.springcore.boardtest.dto.user.UserRequestDto;
+import com.springcore.boardtest.dto.user.UserUpdateDto;
 import com.springcore.boardtest.repository.board.BoardRepository;
 import com.springcore.boardtest.repository.comment.CommentRepository;
 import com.springcore.boardtest.repository.user.UserRepository;
@@ -43,39 +43,11 @@ public class UserService {
     private String imageUploadFolder;
 
     // 회원가입
-    public Long save(UserRequestDto_valid userRequestDto) {
-        // vaidateUserName(userRequestDto);
+    public Long save(UserRequestDto userRequestDto) {
         userRequestDto.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         userRequestDto.setRole(UserRole.USER);
 
         return userRepository.save(userRequestDto.toEntity()).getUserIdx();
-    }
-
-//    private void vaidateUserName(UserRequestDto_valid userRequestDto) {
-//        userRepository.findByUsername(userRequestDto.getUsername()).ifPresent(user -> {
-//            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
-//        });
-//    }
-
-    // 회원가입 시, 아이디 중복 체크
-    public boolean duplicateCheckUserName(String username) {
-        log.info("Check username: {}", username);
-
-        return userRepository.existsByUsername(username);
-    }
-
-    // 회원가입 시, 이메일 중복 체크
-    public boolean duplicateCheckEmail(String email) {
-        log.info("Check username: {}", email);
-
-        return userRepository.existsByEmail(email);
-    }
-
-    // 회원가입 시, 닉네임 중복 체크
-    public boolean duplicateCheckNickname(String nickname) {
-        log.info("Check username: {}", nickname);
-
-        return userRepository.existsByNickname(nickname);
     }
 
     // 회원가입 시, 유효성 체크
@@ -89,15 +61,14 @@ public class UserService {
         return validatorResult;
     }
 
-
     // 회원정보 수정
     @Transactional
-    public void update(UserUpdateDto_valid updatetDto, MultipartFile multipartFile, Long idx) {
+    public void update(UserUpdateDto userRequestDto, MultipartFile multipartFile, Long idx) {
         User findUser =  userRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지않습니다. idx: " + idx));
 
-        String password = passwordEncoder.encode(updatetDto.getPassword());
+        String password = passwordEncoder.encode(userRequestDto.getPassword());
 
-        if(!multipartFile.isEmpty()) {
+        if(multipartFile != null) {
             String imageFileName = findUser.getUserIdx() + "_" + multipartFile.getOriginalFilename();
             Path imageFilePath = Paths.get(imageUploadFolder + imageFileName);
             log.info("ImageFile Name :{}" , imageFileName);
@@ -114,28 +85,31 @@ public class UserService {
             findUser.updateProfileImage(imageFileName);
         }
 
-        findUser.update(password, updatetDto.getEmail(), updatetDto.getNickname());
+        findUser.update(password, userRequestDto.getEmail(), userRequestDto.getNickname());
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(findUser.getUsername(), updatetDto.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(findUser.getUsername(), userRequestDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     // 회원탈퇴
     @Transactional
-    public void delete(Long id) {
+    public String delete(Long id, String chkPassword) {
         User findUser =  userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지않습니다. id: " + id));
 
+        if(!passwordEncoder.matches(chkPassword, findUser.getPassword())) {
+            return "fail";
+        }
         commentRepository.deleteCommentByUser(findUser);
         boardRepository.deleteBoardByUser(findUser);
 
         File file = new File(imageUploadFolder + findUser.getProfileImage());
         file.delete();
-        userRepository.deleteById(findUser.getUserIdx());
+        userRepository.deleteById(id);
         SecurityContextHolder.clearContext();
+        return "true";
     }
 
-    public boolean checkPassword(Long id, String check_password) {
-        User findUser =  userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지않습니다. id: " + id));
-        return passwordEncoder.matches(check_password, findUser.getPassword());
+    public boolean checkPassword(String chkPassword, String password) {
+        return passwordEncoder.matches(chkPassword, password);
     }
 }

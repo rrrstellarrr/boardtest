@@ -9,9 +9,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
-
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
     // 조회수 증가
@@ -29,13 +26,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     // 마이페이지 검색
     Page<Board> findByUser(User user, Pageable pageable);
 
-
     // 게시글 삭제 (회원 탈퇴)
     void deleteBoardByUser(User user);
-
-//    @Query(value = "SELECT userIdx, count(userIdx) as postingCnt FROM Board group by userIdx ORDER BY postingCnt DESC")
-//            countQuery = "SELECT COUNT(b.userIdx) AS counts FROM Board b ORDER BY counts DESC",
-//            nativeQuery = true)
-//    List<Board> findByUserIdx();
 
 }

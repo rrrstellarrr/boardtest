@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header :: head ('끄적끄적')"></head>
 <link rel="stylesheet" href="/css/board.css">
 <link rel="stylesheet" href="/css/search.css">
@@ -25,8 +25,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a>
-                                    <span class="sortby-item">아이좋아순</span>
+                                <a id="sort-comments" th:href="@{/kkeujeok/list{sortby}(sortby='comments', orderby=comments)}">
+                                    <span class="sortby-item">댓글순</span>
                                 </a>
                             </li>
                         </ul>

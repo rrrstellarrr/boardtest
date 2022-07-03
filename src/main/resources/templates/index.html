@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header :: head ('끄적끄적')"></head>
 <link rel="stylesheet" href="/css/board.css">
 <link rel="stylesheet" href="/css/search.css">
@@ -9,26 +9,11 @@
     <div th:replace="layout/navi :: navi"></div>
     <div class="main">
         <div class="main_container">
+
         </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script th:src="@{/js/search.js}"></script>
-<script>
-    var default_area = '';
-        function area_select(selected_area) {
-            if( default_area != selected_area ) {
-                if( default_area !='' ) {
-                    default_area.style.display = 'none';
-                }
-                selected_area.style.display = 'block';
-                default_area = selected_area;
-            } else {
-                selected_area.style.display = 'none';
-                default_area = '';
-            }
-        }
-</script>
 </body>
-
 </html>

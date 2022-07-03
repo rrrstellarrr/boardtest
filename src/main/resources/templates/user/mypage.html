@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header :: head ('끄적끄적')"></head>
 <link rel="stylesheet" href="/css/board.css">
 <link rel="stylesheet" href="/css/search.css">
@@ -11,7 +11,7 @@
         <div class="main_container">
             <div class="main-content">
                 <!--        내 정보 수정 form            -->
-                <form class="mypage-form" action="/myinfo/update" method="post" enctype="multipart/form-data">
+                <form class="mypage-form">
                     <input type="hidden" name="_method" value="put">
                     <input id="userIdx" type="hidden" name="userIdx" th:value="${user.userIdx}">
                     <h3>내 정보</h3>
@@ -36,8 +36,8 @@
                     </div>
                     <div class="myinfo-form-group">
                         <p class="myinfo-p">비밀번호: </p>
-                            <input class="signin-form" id="password" type="password"
-                                                             name="password" placeholder="비밀번호">
+                        <input class="signin-form" id="password" type="password"
+                               name="password" placeholder="비밀번호">
                         <span class="check" th:text="${valid_password}"></span>
                     </div>
                     <div class="myinfo-form-group">
@@ -53,10 +53,10 @@
                         <span class="check" id="nickname_result" th:text="${valid_nickname}"></span>
                     </div>
                     <div class="form-group">
-                        <button class="btn" id="update_account" type="submit">내정보 수정</button>
+                        <button class="btn" id="update_account">내정보 수정</button>
                     </div>
                     <div class="delete-form-group">
-                        <a class="btn-red" href="/mypage/myinfo/delete">회원 탈퇴</a>
+                        <a href="/mypage/myinfo/delete">회원 탈퇴</a>
                     </div>
                 </form>
             </div>

@@ -18,12 +18,12 @@ $(function(){
         }
         $.ajax({
             type: "POST",
-            url: "/write",
+            url: "/api/kkeujeok/write",
             dataType: "JSON",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data)
-        }).done(function() {
-            alert('등록되었습니다.');
+        }).done(function(result) {
+            alert(result.message);
             window.location.href="/kkeujeok/list";
         }).fail(function (error) {
             alert(JSON.stringify(error));
@@ -46,14 +46,13 @@ $(function(){
         }
         $.ajax({
             type: "PUT",
-            url: "/update/" + data.id,
+            url: "/api/kkeujeok/update/" + data.id,
             dataType: "JSON",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
-            dataType: "TEXT",
             async:false
-        }).done(function() {
-            alert("수정되었습니다.");
+        }).done(function(result) {
+            alert(result.message);
             window.location.href="/kkeujeok/read/" + data.id;
         }).fail(function (error) {
             alert("실패하였습니다." + JSON.stringify(error));
@@ -66,11 +65,11 @@ $(function(){
         if(confirm("게시글을 삭제하시겠습니까?")) {
             $.ajax({
                 type: "DELETE",
-                url: "/delete/" + id,
+                url: "/api/kkeujeok/delete/" + id,
                 dataType: "JSON",
                 contentType: "application/json; charset=utf-8"
-            }).done(function() {
-                alert("삭제되었습니다.");
+            }).done(function(result) {
+                alert(result.message);
                 window.location.href="/kkeujeok/list";
             }).fail(function (error) {
                 alert(JSON.stringify(error));
@@ -84,34 +83,17 @@ $(function(){
         if(confirm("댓글을 삭제하시겠습니까?")) {
             $.ajax({
                 type: "DELETE",
-                url: "/comment/delete/" + commentId,
+                url: "/api/comment/delete/" + commentId,
                 dataType: "JSON",
                 contentType: "application/json; charset=utf-8"
-            }).done(function() {
-                alert("삭제되었습니다.");
+            }).done(function(result) {
+                alert(result.message);
                 window.location.reload();
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });
         }
     })
-
-    $("#sort-new").on("click", function(){
-        if(!$("#sort-new .sortby-item").hasClass("checked")) {
-            $("#sort-new .sortby-item").addClass(" checked");
-            if($("#sort-views .sortby-item").hasClass("checked")) {
-                $("#sort-views .sortby-item").attr("class", "sortby-item")
-            }
-        }
-    });
-    $("#sort-views").on("click", function(){
-        if(!$("#sort-views .sortby-item").hasClass("checked")) {
-            $("#sort-views .sortby-item").addClass(" checked");
-            if($("#sort-new .sortby-item").hasClass("checked")) {
-                $("#sort-new .sortby-item").attr("class", "sortby-item")
-            }
-        }
-    });
 
     $("#replyBtn").on("click", function(){
         const data = {
@@ -120,12 +102,12 @@ $(function(){
         };
         $.ajax({
             type: "POST",
-            url: "/comment/" + data.id,
+            url: "/api/comment/" + data.id,
             dataType: "JSON",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data)
-        }).done(function() {
-            alert("댓글작성이 완료되었습니다.");
+        }).done(function(result) {
+            alert(result.message);
             window.location.reload();
         }).fail(function (error) {
             alert(JSON.stringify(error));
@@ -145,6 +127,5 @@ $(function(){
         $(".default-option").text(text);
         $(".dropdown ul").removeClass("active");
     });
-
 
 });

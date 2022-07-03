@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header :: head ('끄적끄적')"></head>
 <link rel="stylesheet" href="/css/board.css">
 <link rel="stylesheet" href="/css/search.css">
@@ -12,27 +12,27 @@
             <div class="main-content">
                 <div class="read-form">
                     <div class="read-content" style="margin-top: 2em;">
-                        <div class="form-group">
+                        <div class="write-form-group">
                             <p class="read-content-p">제목: </p>
                             <input class="signin-form" type="text" id="title" name="title" th:value="${board.title}"
                                    disabled>
                         </div>
-                        <div class="form-group">
+                        <div class="write-form-group">
                             <p class="read-content-p">작성자: </p>
                             <input class="signin-form" type="text" id="nickname" name="nickname"
                                    th:value="${board.user.nickname}" disabled>
                         </div>
-                        <div class="form-group">
+                        <div class="write-form-group">
                             <p class="read-content-p">작성일: </p>
                             <input class="signin-form" type="text" id="modifiedDate" name="modifiedDate"
                                    th:value="${#temporals.format(board.modifiedDate, 'yyyy-MM-dd HH:mm:ss')}" disabled>
                         </div>
-                        <div class="form-group">
+                        <div class="write-form-group">
                             <p class="read-content-p">조회수: </p>
                             <input class="signin-form" type="text" id="views" name="views" th:value="${board.views}"
                                    disabled>
                         </div>
-                        <div class="form-group">
+                        <div class="write-form-group">
                             <textarea rows="10" class="read-textarea-form" id="content" th:text="${board.content}"
                                       disabled></textarea>
                         </div>

@@ -34,5 +34,5 @@ spring:
       maxRequestSize: 10MB
 
 profileImg:
-  path: /이미지저장경로/profile_imgs/
+  path: /Users/seromui/Study/spring_project/profile_imgs/
 

@@ -6,7 +6,7 @@ import com.springcore.boardtest.dto.board.BoardRequestDto;
 import com.springcore.boardtest.dto.board.BoardResponseDto;
 import com.springcore.boardtest.repository.board.BoardRepository;
 import com.springcore.boardtest.repository.user.UserRepository;
-import com.springcore.boardtest.security.CustomUserDetails;
+import com.springcore.boardtest.config.auth.CustomUserDetails;
 import com.springcore.boardtest.service.board.BoardService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

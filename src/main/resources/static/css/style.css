@@ -67,6 +67,7 @@ a {
 
 .main_container {
     max-width: 100%;
+    padding: 1.5em 0;
 }
 
 .main-content {
@@ -77,6 +78,15 @@ a {
     position: relative;
     margin-bottom: 1rem;
     width: 100%;
+}
+
+.write-form-group {
+    position: relative;
+    margin-bottom: 1rem;
+    width: 70%;
+    text-align: start;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .myinfo-form-group {
@@ -167,6 +177,14 @@ button {
     background: #fc0219;
 }
 
+.delete-form-group a {
+    color: #fc0219;
+    padding: 2px 16px;
+}
+.delete-form-group a:hover {
+    border-bottom: 1px solid #fc0219;
+}
+
 .area_btn_selected {
 	color: white;
 	background: #8bbabb;
@@ -246,6 +264,7 @@ form {
 }
 
 .nav-link {
+    cursor: pointer;
     font-size: 17px;
     padding-top: 1.2rem;
     padding-bottom: 1.2rem;

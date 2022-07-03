@@ -1,5 +1,6 @@
 package com.springcore.boardtest.dto.user;
 
+import com.springcore.boardtest.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,9 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserUpdateDto_valid {
+public class UserUpdateDto {
+
+    private Long userIdx;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Pattern(regexp = "^[a-zA-Z]{1}(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,12}", message = "비밀번호는 6~12자 영문 대 소문자, 숫자를 사용해주세요.")
@@ -23,6 +26,16 @@ public class UserUpdateDto_valid {
     @Email(message = "이메일 형식이 올바르지 않습니다.")
     private String email;
 
+    @NotBlank(message = "닉네임을 입력해주세요.")
     @Pattern(regexp = "(?=.*[ㄱ-ㅎ가-힣])[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$", message = "닉네임은 특수문자를 제외한 2~10자리입니다.")
     private String nickname;
+
+    public User toEntity() {
+        User user = User.builder()
+                .password(password)
+                .email(email)
+                .nickname(nickname)
+                .build();
+        return user;
+    }
 }
