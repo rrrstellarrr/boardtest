@@ -23,7 +23,7 @@
                         <div class="form-group">
                             <button type="submit" class="btn">로그인</button>
                         </div>
-                        <div th:if="${param.error}">
+                        <div th:if="${error}">
                             <p th:text="${exception}" class="alert alert-danger"></p>
                         </div>
                     </form>
