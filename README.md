@@ -109,8 +109,8 @@
 <img width="1598" alt="Screen Shot 2022-07-06 at 16 19 07" src="https://user-images.githubusercontent.com/87481519/177492545-2144753b-c3d2-4620-90f2-0a0f24c7d3b1.png">
 </details>
 
-<summary>사용자</summary>
 <details markdown="1">
+<summary>사용자</summary>
 1. 로그인 화면
 <img width="1598" alt="Screen Shot 2022-07-06 at 16 20 26" src="https://user-images.githubusercontent.com/87481519/177493031-33369924-c1c6-4cf9-b9ba-f45253d50b99.png">
 
