@@ -111,8 +111,10 @@
 
 <details markdown="1">
 <summary>사용자</summary>
-1. 로그인 화면
+1-1. 로그인 화면
 <img width="1598" alt="Screen Shot 2022-07-06 at 16 20 26" src="https://user-images.githubusercontent.com/87481519/177493031-33369924-c1c6-4cf9-b9ba-f45253d50b99.png">
+1-2. 로그인 실패 화면
+<img width="1335" alt="Screen Shot 2022-07-06 at 21 05 27" src="https://user-images.githubusercontent.com/87481519/177546367-8893284f-45d2-4be7-bc25-4ada2bdc6339.png">
 
 2. 회원가입 화면
 <img width="1598" alt="Screen Shot 2022-07-06 at 16 23 06" src="https://user-images.githubusercontent.com/87481519/177493243-79b75759-8ad4-4731-8c96-638c67f9e7f7.png">
