@@ -37,14 +37,14 @@ public class UserController {
                         Model model) {
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
-        return "/user/login";
+        return "user/login";
     }
 
     // 회원 가입 페이지
     @GetMapping("/join")
     public String signup(Model model) {
         model.addAttribute("userDto", new UserRequestDto());
-        return "/user/join";
+        return "user/join";
     }
 
     // 회원 가입 처리
@@ -59,7 +59,7 @@ public class UserController {
                 model.addAttribute(key, validateResult.get(key));
             }
 
-            return "/user/join";
+            return "user/join";
         }
         userService.save(userRequestDto);
         return "redirect:/";
@@ -69,14 +69,14 @@ public class UserController {
     @GetMapping("/mypage/myinfo")
     public String mypage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         model.addAttribute("user", userDetails.getUser());
-        return "/user/mypage";
+        return "user/mypage";
     }
 
     // 회원 탈퇴페이지
     @GetMapping("/mypage/myinfo/delete")
     public String delete(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         model.addAttribute("user", userDetails.getUser());
-        return "/user/delete";
+        return "user/delete";
     }
 
 }

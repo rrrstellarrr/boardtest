@@ -56,7 +56,7 @@ public class BoardController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("boardList", list);
-        return "/board/list";
+        return "board/list";
     }
 
     @GetMapping("/kkeujeok/list{sortby}")
@@ -73,12 +73,12 @@ public class BoardController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("boardList", list);
 
-        return "/board/list";
+        return "board/list";
     }
 
     @GetMapping("/kkeujeok/write")
     public String write() {
-        return "/board/write";
+        return "board/write";
     }
 
     @GetMapping("/kkeujeok/read/{id}")
@@ -100,13 +100,13 @@ public class BoardController {
             model.addAttribute("commentList", comments);
         }
         model.addAttribute("board", boardDto);
-        return "/board/read";
+        return "board/read";
     }
 
     @GetMapping("/kkeujeok/update/{id}")
     public String update(Model model, @PathVariable Long id) {
         model.addAttribute("board", boardService.findById(id));
-        return "/board/update";
+        return "board/update";
     }
 
     @GetMapping("/mypage/list")
@@ -119,12 +119,12 @@ public class BoardController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("boardList", list);
 
-        return "/board/mypage_list";
+        return "board/mypage_list";
     }
 
     @GetMapping("/contack")
     public String contack() {
-        return "/board/contack";
+        return "board/contack";
     }
 
 }
